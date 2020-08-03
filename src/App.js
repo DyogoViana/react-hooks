@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 
 function App() {
 	const [tech, setTech] = useState([]);
 	const [newTech, setNewTech] = useState('');
 
-	function handleAdd() {
+	const handleAdd = useCallback(() => {
 		setTech([...tech, newTech]);
 		setNewTech(''); // Limpa o campo input.
-	}
+	}, [newTech, tech]); // Só irá recriar na memória quando houver mudanças no 'newTech' e/ou 'tech'.
 
 	useEffect(() => {
 		// Verifixa se tem algo no localStorage.
@@ -36,6 +36,7 @@ function App() {
 			</ul>
 
 			<strong>Você tem {techSize} tecnologias.</strong>
+			<br />
 
 			<input
 				value={newTech}
