@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 function App() {
 	const [tech, setTech] = useState([]);
@@ -24,6 +24,9 @@ function App() {
 		localStorage.setItem('tech', JSON.stringify(tech));
 	}, [tech]); // executa toda vez que o valor 'tech' for auterado.
 
+	// 'techSize' só executa novamente o 'tech.length', quando o valor de 'tech' for diferente.
+	const techSize = useMemo(() => tech.length, [tech]);
+
 	return (
 		<>
 			<ul>
@@ -32,10 +35,13 @@ function App() {
 				))}
 			</ul>
 
+			<strong>Você tem {techSize} tecnologias.</strong>
+
 			<input
 				value={newTech}
 				onChange={(event) => setNewTech(event.target.value)}
 			/>
+
 			<button type="button" onClick={handleAdd}>
 				Adicionar nova tecnológia
 			</button>
